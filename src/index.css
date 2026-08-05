@@ -1,0 +1,219 @@
+@import "tailwindcss";
+
+/* Tailwind v4 defaults `dark:` to the OS prefers-color-scheme media query.
+   This app toggles a `.dark` class on <html> instead (see ThemeContext), so
+   without this line, switching to Light Mode while the device/browser is in
+   dark mode left every `dark:text-white` etc. still active — turning text
+   white-on-white and making it disappear. This pins `dark:` to the class. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-display: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Dark mode */
+  --color-navy-950: #0b1220;
+  --color-navy-900: #0f1b33;
+  --color-navy-800: #142a4d;
+  --color-navy-700: #1b3a68;
+
+  /* Brand */
+  --color-blue-600: #2158c9;
+  --color-blue-500: #2e6fd9;
+  --color-blue-400: #5c8fe8;
+  --color-emerald-600: #0f9d58;
+  --color-emerald-500: #16b866;
+  --color-emerald-400: #3fd587;
+  --color-rose-500: #e6493f;
+  --color-rose-600: #d13a30;
+  --color-amber-500: #e8a628;
+  --color-amber-600: #c9871a;
+
+  /* Light mode surface — soft, muted, never pure white (Notion/Linear/Stripe style) */
+  --color-cloud-50: #f4f6fb;   /* app background */
+  --color-cloud-100: #eceff6;  /* subtle fills, pills */
+  --color-cloud-200: #dde2ee;  /* borders */
+  --color-cloud-300: #c7cee2;
+  --color-surface: #ffffff;    /* cards sit slightly above background */
+
+  --color-ink-900: #10182c;
+  --color-ink-700: #33405e;
+  --color-ink-600: #475467;
+  --color-ink-400: #8892a6;
+}
+
+* { -webkit-tap-highlight-color: transparent; }
+
+html {
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+}
+
+body {
+  background: var(--color-cloud-50);
+  color: var(--color-ink-900);
+}
+
+.dark body {
+  background: var(--color-navy-950);
+  color: #eef1f7;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--color-ink-400); border-radius: 8px; opacity: .4; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--color-cloud-200) 25%, #f7f9fc 37%, var(--color-cloud-200) 63%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+.dark .skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,.06) 25%, rgba(255,255,255,.12) 37%, rgba(255,255,255,.06) 63%);
+  background-size: 800px 100%;
+}
+
+/* Solid, dependable surfaces. No color-mix()/backdrop-filter stacking so rendering
+   stays 100% consistent across phones, browsers, and print — this is what caused
+   the Dashboard's inconsistent/blown-out background before. */
+@layer components {
+  .app-shell {
+    background: var(--color-cloud-50);
+  }
+  .dark .app-shell {
+    background: var(--color-navy-950);
+  }
+
+  .surface {
+    background: var(--color-surface);
+    border: 1px solid var(--color-cloud-200);
+  }
+  .dark .surface {
+    background: var(--color-navy-900);
+    border: 1px solid rgba(255,255,255,.08);
+  }
+
+  .glass {
+    background: var(--color-surface);
+    border: 1px solid var(--color-cloud-200);
+  }
+  .dark .glass {
+    background: var(--color-navy-900);
+    border: 1px solid rgba(255,255,255,.08);
+  }
+
+  .input {
+    @apply w-full rounded-2xl border border-cloud-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3.5 text-[15px] text-ink-900 dark:text-white placeholder:text-ink-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-shadow;
+  }
+  .btn-primary {
+    @apply bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm py-3.5 rounded-2xl shadow-sm active:scale-[0.98] transition-transform disabled:opacity-60;
+  }
+  .btn-secondary {
+    @apply bg-cloud-100 dark:bg-white/5 text-ink-900 dark:text-white font-semibold text-sm py-3.5 rounded-2xl active:scale-[0.98] transition-transform;
+  }
+  .card {
+    @apply rounded-2xl p-4 lg:p-5 shadow-sm;
+    background: var(--color-surface);
+    border: 1px solid var(--color-cloud-200);
+  }
+  .dark .card {
+    background: var(--color-navy-900);
+    border: 1px solid rgba(255,255,255,.08);
+  }
+}
+
+/* Responsive report table — deliberately written in plain CSS, outside any
+   @layer, so it always wins the cascade no matter what Tailwind utilities
+   run alongside it. Renders as a real table on tablet/desktop; collapses
+   into labeled stacked rows on phones so nothing scrolls sideways. */
+.report-table {
+  width: 100%;
+  font-size: 0.875rem;
+  border-collapse: collapse;
+}
+.report-table th {
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--color-ink-400);
+  padding: 0.625rem 1rem 0.625rem 0;
+  border-bottom: 1px solid var(--color-cloud-200);
+  white-space: nowrap;
+}
+.dark .report-table th {
+  border-bottom-color: rgba(255,255,255,.1);
+}
+.report-table td {
+  padding: 0.625rem 1rem 0.625rem 0;
+  color: var(--color-ink-900);
+  vertical-align: top;
+}
+.dark .report-table td {
+  color: #fff;
+}
+.report-table tbody tr {
+  border-bottom: 1px solid var(--color-cloud-100);
+}
+.dark .report-table tbody tr {
+  border-bottom-color: rgba(255,255,255,.05);
+}
+.report-table tbody tr:last-child {
+  border-bottom: 0;
+}
+
+@media (max-width: 639px) {
+  .report-table thead {
+    display: none;
+  }
+  .report-table,
+  .report-table tbody,
+  .report-table tr {
+    display: block;
+    width: 100%;
+  }
+  .report-table tr {
+    border: 1px solid var(--color-cloud-200);
+    border-radius: 1rem;
+    margin-bottom: 0.625rem;
+    padding: 0.875rem;
+  }
+  .dark .report-table tr {
+    border-color: rgba(255,255,255,.1);
+  }
+  .report-table td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.25rem 0;
+    border: 0;
+    text-align: right;
+  }
+  .report-table td::before {
+    content: attr(data-label);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--color-ink-400);
+    flex-shrink: 0;
+    text-align: left;
+  }
+}
+
+@media print {
+  .print\:hidden { display: none !important; }
+  body { background: white !important; color: black !important; }
+  .card, .surface { border: 1px solid #ddd !important; box-shadow: none !important; break-inside: avoid; }
+}
