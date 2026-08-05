@@ -1,84 +1,262 @@
-# Makki Town Badminton Club Management System
+# 🏸 Badminton Club Management System
 
-A premium, mobile-first bookkeeping app for Makki Town Badminton Club — built to replace the club's Excel sheet with something anyone can use, that saves automatically, and that always shows a complete, accurate financial picture.
+## Project Brief
+
+The Badminton Club Management System is a modern web application designed to simplify the administration of badminton clubs. It enables club administrators to manage members, attendance, monthly payments, fines, reports, and financial records from a single dashboard. The project was created to replace manual record-keeping with a faster, more organized, and user-friendly solution.
+
+---
+
+## Live Demo
+
+**Live Website:** https://badminton-club-cyan.vercel.app/
+
+---
+
+## GitHub Repository
+
+https://github.com/HaiqaAshfaq/Badminton-Club
+
+---
 
 ## Features
 
-- **Members** — add, edit, and deactivate members with a default monthly fee, phone number, joining date, and notes.
-- **Monthly Payments** — record how much each member paid this month with one tap ("Mark Full") or a custom partial amount. Status (Paid / Partially Paid / Not Paid) and the remaining balance are calculated automatically from the default fee.
-- **Fines** — unlimited fines per member, each with a reason, amount, paid/unpaid status, date issued, date paid, and notes.
-- **Expenses** — unlimited expenses (guard salary, shuttle, tea, electricity, repairs, etc.) with amount, date, and description.
-- **Reports** — a complete, Excel-equivalent monthly report: every member's payment, every fine, every expense, and a full financial summary, plus a chronological activity timeline. Also includes Yearly, Member, Fine, and Expense report views. Every report can be printed or exported to CSV.
-- **Statistics** — income vs. expenses over time, monthly balance, fine collection, top contributors, and expense breakdown, all as interactive charts.
-- **Monthly Records** — browse every past month at a glance, each completely independent from the others.
-- **Member Profiles** — a full payment and fine history for each member.
-- **Backup & Restore** — export everything to a single JSON file and restore it on any device. A quick "undo" is also available right after deleting something.
-- **Dark Mode** — a genuinely soft, readable light theme and a full dark theme.
-- **Help & Instructions** — a built-in, plain-language guide covering every workflow, plus an FAQ.
-- **Works fully offline** — all data lives on your device; nothing is sent to a server.
+- Member Management
+- Attendance Tracking
+- Monthly Payments
+- Fine Management
+- Financial Reports
+- Dashboard Analytics
+- Responsive Design
+- Modern UI
+- Error Handling
+- Data Validation
 
-## Installation
+---
 
-```bash
-npm install
-npm run dev
-```
+## Tech Stack
 
-## Build
+Frontend
 
-```bash
-npm run build
-```
-
-## Preview a production build
-
-```bash
-npm run preview
-```
-
-## Technologies Used
-
-- React 19
+- React
 - Vite
-- Tailwind CSS v4
-- IndexedDB (via the `idb` library)
-- Framer Motion
-- Recharts
-- React Hook Form
-- React Router
+- JavaScript
+- Context API
+- CSS
+
+Development Tools
+
+- Git
+- GitHub
+- Vercel
+- VS Code
+
+---
 
 ## Folder Structure
 
-```
 src/
-  components/     Shared UI building blocks (Sidebar, Topbar, Sheet, cards, tables, error boundary)
-  context/        Global app state (DataContext) and theme (ThemeContext)
-  db/             IndexedDB access layer and first-run seed data
-  features/       Feature-specific forms (members, fines, expenses)
-  pages/          One file per screen/route (Dashboard, Reports, Members, etc.)
-  utils/          Shared, pure helper functions — dates, currency, and all financial calculations
+├── components/
+├── pages/
+├── context/
+├── db/
+├── utils/
+├── assets/
+
+public/
+
+package.json
+
+README.md
+
+---
+
+## Installation
+
+Clone the repository
+
+```bash
+git clone <repository-url>
 ```
 
-All financial math (payment status, remaining balances, monthly totals) lives in `src/utils/finance.js` so every page — Dashboard, Reports, Statistics, Monthly Records — always agrees on the same numbers.
+Go into the project
 
-## Data Storage
+```bash
+cd badminton-club
+```
 
-All club data — members, months, payments, fines, expenses, and activity — is stored **only on this device**, using the browser's built-in IndexedDB. Every change is saved automatically the instant it happens; there is no "Save" button and nothing is ever sent to a server.
+Install dependencies
 
-## Backup & Restore
+```bash
+npm install
+```
 
-Open **Backup & Restore** from the sidebar:
+Run locally
 
-- **Export Backup** downloads a single JSON file containing every member, month, payment, fine, and expense.
-- **Import Backup** lets you select a previously exported file and restore it — this replaces all data currently on the device, so use it when moving to a new phone or computer, or recovering from a lost device.
+```bash
+npm run dev
+```
 
-## Browser Compatibility
+Open
 
-Works in current versions of:
+```
+http://localhost:5173
+```
 
-- Chrome / Chrome for Android
-- Safari / Safari for iOS
-- Firefox
-- Microsoft Edge
+---
 
-Requires a browser with IndexedDB support (all modern desktop and mobile browsers). For the best experience on shared club phones, use the browser's "Add to Home Screen" option to launch the app like a native app.
+## Architecture Overview
+
+### Components
+
+Reusable UI components used throughout the application.
+
+### Pages
+
+Contains all application pages including Dashboard, Reports, Attendance, Payments, and Members.
+
+### Context API
+
+Handles global application state.
+
+### Database
+
+Stores application seed data.
+
+### Utilities
+
+Contains helper functions for calculations and formatting.
+
+---
+
+## AI Integration
+
+This project currently does not integrate a live LLM API.
+
+AI tools were used during development to:
+
+- Debug complex React issues
+- Improve UI/UX
+- Refactor components
+- Generate documentation
+- Optimize code
+
+Future versions will integrate an LLM to automatically:
+
+- Generate monthly financial summaries
+- Suggest payment reminders
+- Produce attendance insights
+- Create administrative reports
+
+---
+
+## Error Handling
+
+The application handles:
+
+- Invalid user input
+- Missing data
+- Empty reports
+- Invalid payment entries
+
+The interface always provides feedback instead of crashing.
+
+---
+
+## Testing
+
+Testing includes:
+
+- Component rendering
+- Navigation
+- Payment calculations
+
+Future improvements include:
+
+- Complete Vitest coverage
+- End-to-end Cypress testing
+
+---
+
+## Performance
+
+Performance optimizations include:
+
+- Lazy rendering
+- Efficient React state management
+- Optimized assets
+- Responsive layouts
+
+Target Lighthouse Score:
+
+- Performance 90+
+- Accessibility 90+
+- Best Practices 90+
+- SEO 90+
+
+---
+
+## Accessibility
+
+Implemented accessibility features include:
+
+- Semantic HTML
+- Keyboard navigation
+- Proper headings
+- Accessible buttons
+- Color contrast improvements
+
+---
+
+## Deployment
+
+Hosted on Vercel.
+
+Deployment process:
+
+1. Push to GitHub
+2. Automatic Vercel deployment
+3. Verify build
+4. Test production site
+
+Rollback strategy:
+
+Redeploy any previous successful deployment from Vercel.
+
+---
+
+## Known Limitations
+
+- No backend database
+- Local storage only
+- No authentication
+- No notifications
+
+---
+
+## Future Improvements
+
+- Firebase backend
+- Authentication
+- AI-generated reports
+- Email notifications
+- SMS reminders
+- Mobile application
+- Payment gateway integration
+
+---
+
+## Reflection
+
+The most challenging part of this project was designing a dashboard that remained simple while handling multiple club management features. Managing state across different modules and ensuring a responsive user experience required several iterations.
+
+Working on this project improved my React development skills, debugging abilities, and understanding of production-ready frontend development. If rebuilding the project, I would start with a backend API and automated testing from the beginning to improve scalability and maintainability.
+
+---
+
+## Author
+
+Haiqa Ashfaq
+
+Frontend Developer
+
+FAST NUCES
